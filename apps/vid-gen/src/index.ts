@@ -28,4 +28,8 @@ app.get("/generate", async (c) => {
   }
 });
 
-export default app;
+export default {
+  port: 3001,
+  fetch: app.fetch,
+  idleTimeout: 30,
+};
