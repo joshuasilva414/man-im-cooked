@@ -17,9 +17,10 @@ export default function Home() {
       <h1 className="text-4xl font-bold p-4 text-[hsl(var(--primary))]">
         ManImCooked
       </h1>
-      <div className="w-full h-1/2 bg-black rounded-lg">
-
-      </div>
+      <video controls className="w-full h-1/2 bg-black rounded-lg">
+        <source src="/FFTExplanation.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
       <form className="flex flex-row my-4" onSubmit={handleSubmit}>
         <Input className="mx-2"
          placeholder="type your prompt here"
@@ -27,7 +28,7 @@ export default function Home() {
          onChange={(e) => setPrompt(e.target.value)}/>
         <Button className="bg-[hsl(var(--primary))] mx-2" type="submit">Submit</Button>
       </form>
-
+      
       
       
     </div>
