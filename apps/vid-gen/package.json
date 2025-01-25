@@ -4,7 +4,8 @@
     "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
-    "hono": "^4.6.18"
+    "hono": "^4.6.18",
+    "openai": "^4.80.1"
   },
   "devDependencies": {
     "@types/bun": "latest"
