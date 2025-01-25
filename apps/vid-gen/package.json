@@ -1,7 +1,7 @@
 {
   "name": "vid-gen",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "PORT=3001 bun run --hot src/index.ts"
   },
   "dependencies": {
     "hono": "^4.6.18",
