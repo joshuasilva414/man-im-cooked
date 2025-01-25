@@ -4,6 +4,7 @@ import OpenAI from 'openai';
 const app = new Hono()
 
 app.get('/', (c) => {
+
   return c.text('Hello Hono!')
 })
 
