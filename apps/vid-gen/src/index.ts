@@ -14,10 +14,22 @@ const client = new OpenAI({
 });
 
 async function main() {
-  const chatCompletion = await client.chat.completions.create({
-    messages: [{ role: 'user', content: 'Say this is a test' }],
-    model: 'gpt-4o',
-  });
+  try {
+    const chatCompletion = await client.chat.completions.create({
+      messages: [{ role: 'user', content: 'Say this is a test' }],
+      model: 'gpt-4o-mini',
+    });
+    console.log(chatCompletion);
+  } catch (error: unknown) {
+    // Type narrowing for known error shape
+    if (error instanceof Error) {
+      // If the error is an instance of Error, log it
+      console.error("Error:", error.message);
+    } else {
+      // If it's not an instance of Error, handle it here (for example, log it generically)
+      console.error("An unknown error occurred:", error);
+    }
+  }
 }
 
 main();
