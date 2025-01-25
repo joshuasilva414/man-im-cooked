@@ -7,7 +7,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-
+import { Bar, BarChart } from "recharts"
+ 
+import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
 
 export default function Home() {
   return (
@@ -37,7 +39,7 @@ export default function Home() {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-
+      
     </div>
   );
 }
