@@ -19,7 +19,7 @@ async function main() {
       messages: [{ role: 'user', content: 'Say this is a test' }],
       model: 'gpt-4o-mini',
     });
-    console.log(chatCompletion);
+    console.log(chatCompletion.choices[0].message.content);
   } catch (error: unknown) {
     // Type narrowing for known error shape
     if (error instanceof Error) {
