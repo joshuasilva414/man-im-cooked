@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import * as fs from "node:fs/promises";
 import { $ } from "bun";
 import OpenAI from "openai";
+import { cors } from "hono/cors";  // Import CORS if needed
 
 const client = new OpenAI({
   apiKey: process.env["OPENAI_API_KEY"],
@@ -15,6 +16,7 @@ app.get("/generate", async (c) => {
   if (!userQuery) {
     return c.text("Please provide the 'query' parameter", 400);
   }
+
   try {
     const chatCompletion = await client.chat.completions.create({
       messages: [{ role: "system", content: "you are a helpful math robot that outputs manim python code for the given prompt. make sure you only respond with python code and that the code will run and have a result without modification. make sure the code is not commente and does not have ''' before or after the code. Also make sure that everything is essentially in one scene by clearing the screen before you start a new screen. feel free to use the voice over function to create voice over explanations of each scene" }, { role: "user", content: userQuery }],
@@ -45,6 +47,7 @@ app.get("/generate", async (c) => {
 
     return c.text(chatCompletion.choices[0].message.content!);
   } catch (error: unknown) {
+    console.error("Error:", error);
     return c.text(
       "An unknown error occurred while generating the response",
       500
