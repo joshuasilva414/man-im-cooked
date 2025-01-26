@@ -6,20 +6,29 @@ class PythagoreanTheoremScene(VoiceoverScene):
     def construct(self):
         self.set_speech_service(GTTSService())
 
-        triangle = Polygon(ORIGIN, 3 * RIGHT, 3 * RIGHT + 3 * UP, fill_color=BLUE, fill_opacity=0.5)
-        hypotenuse = Line(ORIGIN, 3 * RIGHT + 3 * UP, color=YELLOW)
-        square1 = Square(side_length=3, color=RED, fill_opacity=0.5).shift(1.5 * UP + 1.5 * LEFT)
-        square2 = Square(side_length=3, color=GREEN, fill_opacity=0.5).shift(1.5 * DOWN + 1.5 * RIGHT)
-        square_hypotenuse = Square(side_length=6, color=PURPLE, fill_opacity=0.5).shift(UP + RIGHT)
+        title = Text("Pythagorean Theorem").scale(1.5)
+        self.play(Write(title))
+        self.wait(1)
 
-        with self.voiceover(text="This is a right triangle, where we will illustrate the Pythagorean theorem.") as tracker:
-            self.play(Create(triangle))
+        self.play(FadeOut(title))
+
+        right_triangle = Polygon(0, 0, 3, 0, 0, 4, color=BLUE)
+        hypotenuse = Line(3, 0, 0, 4, color=YELLOW)
+        a_label = MathTex("a").next_to(right_triangle.get_vertices()[0:2], DOWN)
+        b_label = MathTex("b").next_to(right_triangle.get_vertices()[1:3], RIGHT)
+        c_label = MathTex("c").next_to(hypotenuse, UP)
+
+        with self.voiceover(text="Let's draw a right triangle.") as tracker:
+            self.play(Create(right_triangle))
+        with self.voiceover(text="The sides are labeled 'a' and 'b', and the hypotenuse is 'c'.") as tracker:
+            self.play(Create(hypotenuse), Write(a_label), Write(b_label), Write(c_label))
         
-        with self.voiceover(text="The lengths of the two shorter sides are 3 each.") as tracker:
-            self.play(Create(square1), Create(square2))
-        
-        with self.voiceover(text="According to the Pythagorean theorem, the square of the hypotenuse equals the sum of the squares of the other two sides.") as tracker:
-            self.play(Create(hypotenuse), Create(square_hypotenuse))
-        
-        with self.voiceover(text="Hence, 3 squared plus 3 squared equals the hypotenuse squared.") as tracker:
-            self.wait(2)
+        self.wait(2)
+
+        formula = MathTex("a^2 + b^2 = c^2").scale(1.5)
+        formula.move_to(UP * 3)
+
+        with self.voiceover(text="According to the Pythagorean theorem, a² plus b² equals c².") as tracker:
+            self.play(Write(formula))
+
+        self.wait(2)
