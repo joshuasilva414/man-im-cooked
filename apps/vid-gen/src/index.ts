@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import * as fs from "node:fs/promises";
+import * as fs from "node:fs";
 import { $ } from "bun";
 import OpenAI from "openai";
 import { cors } from "hono/cors"; // Import CORS if needed
@@ -59,7 +59,7 @@ app.get("/generate", async (c) => {
       content: `
             Now output manim code that will make an animation using the script. Make sure you only respond with python code and that the code will run and 
             have a result without modification. make sure the code is not commented and does not have 
-            three apostrophies before or after the code. Also make sure that everything is 
+            three backticks before or after the code. Also make sure that everything is 
             essentially in one scene by clearing the screen before you start a new screen. you must use the voice over function to create voice over explanations of each scene. here is some example code of a voiceover being used to voice over a circle being drawn. Your code should be following the same format, but producing a much longer video:
             ----------------------------------------------------------------
             from manim_voiceover import VoiceoverScene
@@ -305,21 +305,18 @@ class FFTExplanation(Scene):
     if (scriptCompletion.choices.length === 0) {
       return c.text("Unable to generate a response at this time", 500);
     }
-
-    await fs.writeFile("script.py", chatCompletion.choices[0].message.content!);
+    const scriptFile = fs.openSync("script.py", "w");
+    fs.writeFileSync(scriptFile, chatCompletion.choices[0].message.content!);
+    fs.closeSync(scriptFile);
 
     try {
-      const output =
-        await $`manim -ql script.py -c manim.cfg -o script.mp4`.text();
-      console.log(output);
+      await $`manim -ql script.py -c manim.cfg -o script.mp4`;
     } catch (err: any) {
       console.log(`Failed with code ${err.exitCode}`);
       console.log(err.stdout.toString());
       console.log(err.stderr.toString());
     }
-
-    await (await fs.open("./media/script.mp4")).datasync();
-    const vid = await (await fs.open("./media/script.mp4")).readFile();
+    const vid = fs.readFileSync("./media/script.mp4");
 
     return c.body(vid as any, 200, {
       "Content-Type": "video/mp4",

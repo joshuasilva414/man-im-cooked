@@ -6,3 +6,5 @@ manim/
 media/
 
 _pycache__/
+
+script.py

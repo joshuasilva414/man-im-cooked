@@ -1,76 +1,115 @@
+from manim import *
 from manim_voiceover import VoiceoverScene
 from manim_voiceover.services.gtts import GTTSService
-from manim import *
 
-class MultiplicativePropertyScene(VoiceoverScene):
+class GraphingExplanation(VoiceoverScene):
     def construct(self):
         self.set_speech_service(GTTSService())
 
-        title = Tex("Multiplicative Properties", font_size=36)
+        self.introduction_scene()
+        self.clear_screen()
+
+        self.coordinate_system_scene()
+        self.clear_screen()
+
+        self.plotting_points_scene()
+        self.clear_screen()
+
+        self.linear_equations_scene()
+        self.clear_screen()
+
+        self.analyzing_graphs_scene()
+        self.clear_screen()
+
+        self.practice_scene()
+
+    def clear_screen(self):
+        self.play(*[FadeOut(mob) for mob in self.mobjects])
+
+    def introduction_scene(self):
+        title = Tex("Graphing in Mathematics")
+        subtitle = Tex("A Visual Way to Represent Relationships").scale(0.8)
+        subtitle.next_to(title, DOWN)
         self.play(Write(title))
-        self.wait(1)
-        
-        self.play(FadeOut(title))
-        
-        zero_property = Tex("1. Multiplicative Property of Zero: ", font_size=24)
-        zero_example = Tex("a \\times 0 = 0", font_size=24)
-        
-        with self.voiceover(text="Let's begin with the property of zero. The multiplicative property of zero states that any number multiplied by zero equals zero.") as tracker:
-            self.play(Write(zero_property))
-            self.wait(1)
-            self.play(Write(zero_example))
+        self.play(FadeIn(subtitle, shift=DOWN))
+        self.wait(2)
+
+        with self.voiceover(text="Graphing is a powerful tool used to visualize mathematical relationships and functions. Let's explore this concept together.") as tracker:
             self.wait(2)
-        
-        self.play(FadeOut(zero_property), FadeOut(zero_example))
-        
-        identity_property = Tex("2. Multiplicative Identity: ", font_size=24)
-        identity_example = Tex("a \\times 1 = a", font_size=24)
-        
-        with self.voiceover(text="Next, we have the multiplicative identity. This property says that when you multiply any number by one, it remains unchanged.") as tracker:
-            self.play(Write(identity_property))
-            self.wait(1)
-            self.play(Write(identity_example))
+
+    def coordinate_system_scene(self):
+        title = Tex("The Cartesian Coordinate System")
+        title.to_edge(UP)
+        self.play(Write(title))
+
+        axes = Axes(x_range=[-5, 5, 1], y_range=[-5, 5, 1], axis_config={"color": BLUE})
+        axes_labels = axes.get_axis_labels(x_label="X-axis", y_label="Y-axis")
+
+        with self.voiceover(text="The Cartesian coordinate system consists of two perpendicular lines, the x-axis and the y-axis, intersecting at the origin.") as tracker:
+            self.play(Create(axes), Write(axes_labels))
             self.wait(2)
-        
-        self.play(FadeOut(identity_property), FadeOut(identity_example))
-        
-        inverse_property = Tex("3. Multiplicative Inverse: ", font_size=24)
-        inverse_example = Tex("a \\times \\frac{1}{a} = 1 \\text{ (for } a \\neq 0\\text{)}", font_size=20)
-        
-        with self.voiceover(text="The multiplicative inverse states that every non-zero number has an inverse, which you multiply with to get one.") as tracker:
-            self.play(Write(inverse_property))
-            self.wait(1)
-            self.play(Write(inverse_example))
+
+    def plotting_points_scene(self):
+        title = Tex("Plotting Points on the Graph")
+        title.to_edge(UP)
+        self.play(Write(title))
+
+        point_a = Dot(Point(2, 3), color=YELLOW)
+        point_b = Dot(Point(-1, -2), color=GREEN)
+        point_c = Dot(Point(-3, 4), color=RED)
+
+        with self.voiceover(text="Let's plot some points. The point (2, 3) is located 2 units to the right and 3 units up from the origin.") as tracker:
+            self.play(Create(point_a))
+            self.wait(2)
+
+        with self.voiceover(text="The point (-1, -2) is found by moving 1 unit to the left and 2 units down.") as tracker:
+            self.play(Create(point_b))
+            self.wait(2)
+
+        with self.voiceover(text="Finally, the point (-3, 4) is 3 units to the left and 4 units up.") as tracker:
+            self.play(Create(point_c))
+            self.wait(2)
+
+    def linear_equations_scene(self):
+        title = Tex("Graphing Linear Equations")
+        title.to_edge(UP)
+        self.play(Write(title))
+
+        axes = Axes(x_range=[-5, 5, 1], y_range=[-5, 5, 1], axis_config={"color": BLUE})
+        line = axes.plot(lambda x: 2*x + 3, color=YELLOW)
+
+        with self.voiceover(text="Now, let's graph the linear equation y equals 2x plus 3. This represents a line with a slope of 2 and a y-intercept of 3.") as tracker:
+            self.play(Create(axes))
+            self.play(Create(line))
             self.wait(3)
 
-        self.play(FadeOut(inverse_property), FadeOut(inverse_example))
-        
-        distributive_property = Tex("4. Distributive Property: ", font_size=24)
-        distributive_example = Tex("a(b + c) = ab + ac", font_size=24)
-        
-        with self.voiceover(text="The distributive property shows how multiplication distributes over addition or subtraction.") as tracker:
-            self.play(Write(distributive_property))
-            self.wait(1)
-            self.play(Write(distributive_example))
+    def analyzing_graphs_scene(self):
+        title = Tex("Analyzing Graphs")
+        title.to_edge(UP)
+        self.play(Write(title))
+
+        axes = Axes(x_range=[-5, 5, 1], y_range=[-5, 5, 1], axis_config={"color": BLUE})
+        line1 = axes.plot(lambda x: x, color=YELLOW)
+        line2 = axes.plot(lambda x: -x, color=RED)
+
+        with self.voiceover(text="When analyzing graphs, we look at the slope, intercepts, and how the graph behaves. Here, we have two lines: one increasing and the other decreasing.") as tracker:
+            self.play(Create(axes))
+            self.play(Create(line1), Create(line2))
             self.wait(3)
 
-        self.play(FadeOut(distributive_property), FadeOut(distributive_example))
-        
-        exponent_property = Tex("5. Properties of Exponents: ", font_size=24)
-        exponent_example = Tex("a^m \\times a^n = a^{m+n}", font_size=24)
+    def practice_scene(self):
+        title = Tex("Practice Graphing")
+        title.to_edge(UP)
+        self.play(Write(title))
 
-        with self.voiceover(text="Finally, we have properties of exponents, where multiplying powers with the same base leads to adding their exponents.") as tracker:
-            self.play(Write(exponent_property))
-            self.wait(1)
-            self.play(Write(exponent_example))
-            self.wait(3)
+        examples = [
+            Tex(r"1. Graph\: y = \frac{1}{2}x + 1"),
+            Tex(r"2. Graph\: y = -x + 2"),
+            Tex(r"3. Graph\: y = 3x - 4"),
+        ]
+        for i, example in enumerate(examples):
+            example.next_to(title, DOWN, buff=0.5 + i)
+            self.play(Write(example))
 
-        self.play(FadeOut(exponent_property), FadeOut(exponent_example))
-        
-        conclusion = Tex("These properties are fundamental in arithmetic and algebra.", font_size=24)
-        
-        with self.voiceover(text="In conclusion, these multiplicative properties are essential tools that simplify computations and enhance your understanding of mathematics.") as tracker:
-            self.play(Write(conclusion))
+        with self.voiceover(text="Now it's your turn! Try graphing these linear equations on your own. Remember to find the slope and y-intercept for each equation.") as tracker:
             self.wait(3)
-        
-        self.play(FadeOut(conclusion))
