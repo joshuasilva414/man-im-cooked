@@ -1,4 +1,6 @@
 # deps
 node_modules/
 
-manim/__pycache__
+manim/
+
+media/

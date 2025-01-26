@@ -55,16 +55,12 @@ app.get("/generate", async (c) => {
       return c.text("Unable to generate a response at this time", 500);
     }
 
-    await fs.writeFile(
-      "manim/script.py",
-      chatCompletion.choices[0].message.content!
-    );
+    await fs.writeFile("script.py", chatCompletion.choices[0].message.content!);
 
-    await $`manim -ql script.py`;
+    await $`manim -ql script.py -c manim.cfg -o script.mp4`;
 
-    const vid = await fs.readFile(
-      "./media/videos/main/1080p60/DefaultTemplate.mp4"
-    );
+    fs.readFile("./media/script.mp4");
+    const vid = await fs.readFile("./media/script.mp4");
 
     return c.body(vid as any, 200, {
       "Content-Type": "video/mp4",

@@ -2,12 +2,6 @@
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import WebResources from "@/components/ui/webResources";
 const videoIds = [
   "IQqtsm-bBRU",
@@ -15,8 +9,7 @@ const videoIds = [
   "ltLUadnCyi0",
   "IHZwWFHWa-w",
   "IQqtsm-bBRU",
-  "KuXjwB4LzSA"
-
+  "KuXjwB4LzSA",
 ];
 export default function Home() {
   const [prompt, setPrompt] = useState("");
@@ -40,18 +33,20 @@ export default function Home() {
       const res = await fetch(
         `http://localhost:3001/generate?query=${prompt}`,
         {
-          method: "POST", // Ensure it's a POST request
+          method: "GET", // Ensure it's a POST request
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "video/mp4",
+            Accept: "binary",
           }, // Send the prompt in the body
         }
       );
 
-      const data = await res.json();
+      const data = await res.blob();
+      const vidUrl = URL.createObjectURL(data);
       if (res.ok) {
-        setResponse(data.result); // Display result from the API
+        setResponse(vidUrl); // Display result from the API
       } else {
-        console.error("Error:", data.message);
+        console.error("Error:", res.text);
         setResponse("Error generating response");
       }
     } catch (error) {
@@ -143,7 +138,7 @@ export default function Home() {
         </div>
       </div>
       <h1 className="text-3xl font-bold p-4 text-[hsl(var(--primary))]">
-        Popular Math Videos 
+        Popular Math Videos
       </h1>
       <div className="flex items-center flex-col w-full p-4 bg-gray-200 rounded-lg h-[500px]">
         <div className="relative overflow-hidden w-full h-full">
@@ -177,7 +172,6 @@ export default function Home() {
         Other Resources
       </h1>
       <div className="flex items-center flex-col h-96 w-full bg-[hsl(var(--background))] p-4 bg-gray-200">
-
         <WebResources />
         {error && (
           <div className="text-red-500 mt-2">Please enter a valid input</div>
