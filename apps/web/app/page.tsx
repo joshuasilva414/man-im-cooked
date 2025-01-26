@@ -13,7 +13,7 @@ const videoIds = [
 ];
 export default function Home() {
   const [prompt, setPrompt] = useState("");
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState("/FFTExplanation.mp4");
   const [responseReady, setResponseReady] = useState(0);
   const [error, setError] = useState(false);
 
@@ -46,7 +46,7 @@ export default function Home() {
       if (res.ok) {
         setResponse(vidUrl); // Display result from the API
       } else {
-        console.error("Error:", res.text);
+        console.error("Error:", res.text());
         setResponse("Error generating response");
       }
     } catch (error) {
@@ -80,7 +80,7 @@ export default function Home() {
         </h1>
         {responseReady == 1 && (
           <video controls className="w-full h-1/2 bg-black rounded-lg">
-            <source src="/FFTExplanation.mp4" type="video/mp4" />
+            <source src={response} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         )}
@@ -100,9 +100,10 @@ export default function Home() {
           </Button>
         </form>
         {error && (
-          <div className="text-red-500 mt-2">Invalid input, please enter a valid input</div>
+          <div className="text-red-500 mt-2">
+            Invalid input, please enter a valid input
+          </div>
         )}
-
 
         <div>
           <Button
@@ -176,8 +177,6 @@ export default function Home() {
         {error && (
           <div className="text-red-500 mt-2">Please enter a valid input</div>
         )}
-
-        {response && <div className="mt-4 text-white">{response}</div>}
       </div>
     </>
   );

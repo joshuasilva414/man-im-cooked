@@ -1,35 +1,25 @@
 from manim_voiceover import VoiceoverScene
 from manim_voiceover.services.gtts import GTTSService
-import numpy as np
 from manim import *
 
-class FastFourierTransformScene(VoiceoverScene):
+class PythagoreanTheoremScene(VoiceoverScene):
     def construct(self):
         self.set_speech_service(GTTSService())
-        
-        title = Text("Fast Fourier Transform", font_size=48)
-        self.play(Write(title))
-        self.wait(2)
-        
-        with self.voiceover(text="Let's start by defining a simple signal.") as tracker:
-            signal = np.sin(np.linspace(0, 10, 100))
-            signal_graph = Axes(x_range=[0, 10, 1], y_range=[-1, 1, 1], axis_config={"color": BLUE})
-            signal_plot = signal_graph.plot(lambda x: np.sin(x), color=YELLOW)
-            self.play(Create(signal_graph), Create(signal_plot))
-        
-        self.wait(2)
 
-        with self.voiceover(text="Now, we will compute its Fourier Transform to analyze the frequency components.") as tracker:
-            frequencies = np.fft.fft(signal)
-            frequency_graph = Axes(x_range=[0, 100, 10], y_range=[-50, 50, 10], axis_config={"color": GREEN})
-            freq_plot = frequency_graph.plot(lambda x: 50 * np.abs(np.fft.fft(signal))[int(x/10)], color=RED)
-            self.play(FadeOut(signal_graph), FadeOut(signal_plot), Create(frequency_graph), Create(freq_plot))
-        
-        self.wait(2)
+        triangle = Polygon(ORIGIN, 3 * RIGHT, 3 * RIGHT + 3 * UP, fill_color=BLUE, fill_opacity=0.5)
+        hypotenuse = Line(ORIGIN, 3 * RIGHT + 3 * UP, color=YELLOW)
+        square1 = Square(side_length=3, color=RED, fill_opacity=0.5).shift(1.5 * UP + 1.5 * LEFT)
+        square2 = Square(side_length=3, color=GREEN, fill_opacity=0.5).shift(1.5 * DOWN + 1.5 * RIGHT)
+        square_hypotenuse = Square(side_length=6, color=PURPLE, fill_opacity=0.5).shift(UP + RIGHT)
 
-        with self.voiceover(text="This shows the frequency components of the original signal.") as tracker:
-            self.play(FadeOut(frequency_graph), FadeOut(freq_plot), FadeOut(title))
+        with self.voiceover(text="This is a right triangle, where we will illustrate the Pythagorean theorem.") as tracker:
+            self.play(Create(triangle))
         
-        final_text = Text("FFT is fundamental in signal processing.", font_size=36)
-        self.play(Write(final_text))
-        self.wait(3)
+        with self.voiceover(text="The lengths of the two shorter sides are 3 each.") as tracker:
+            self.play(Create(square1), Create(square2))
+        
+        with self.voiceover(text="According to the Pythagorean theorem, the square of the hypotenuse equals the sum of the squares of the other two sides.") as tracker:
+            self.play(Create(hypotenuse), Create(square_hypotenuse))
+        
+        with self.voiceover(text="Hence, 3 squared plus 3 squared equals the hypotenuse squared.") as tracker:
+            self.wait(2)
