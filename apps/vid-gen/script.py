@@ -1,115 +1,112 @@
-from manim import *
 from manim_voiceover import VoiceoverScene
 from manim_voiceover.services.gtts import GTTSService
+from manim import *
 
-class GraphingExplanation(VoiceoverScene):
+class ParabolicCurvesScene(VoiceoverScene):
     def construct(self):
         self.set_speech_service(GTTSService())
 
-        self.introduction_scene()
-        self.clear_screen()
-
-        self.coordinate_system_scene()
-        self.clear_screen()
-
-        self.plotting_points_scene()
-        self.clear_screen()
-
-        self.linear_equations_scene()
-        self.clear_screen()
-
-        self.analyzing_graphs_scene()
-        self.clear_screen()
-
-        self.practice_scene()
-
-    def clear_screen(self):
-        self.play(*[FadeOut(mob) for mob in self.mobjects])
-
-    def introduction_scene(self):
-        title = Tex("Graphing in Mathematics")
-        subtitle = Tex("A Visual Way to Represent Relationships").scale(0.8)
-        subtitle.next_to(title, DOWN)
+        title = Text("Understanding Parabolic Curves")
         self.play(Write(title))
-        self.play(FadeIn(subtitle, shift=DOWN))
+        self.wait(2)
+        self.play(FadeOut(title))
+
+        intro = Tex("Parabolas are U-shaped graphs representing quadratic functions.")
+        self.play(Write(intro))
+        self.wait(3)
+        self.play(FadeOut(intro))
+
+        quadratic_function = Tex("$f(x) = ax^2 + bx + c$")
+        self.play(Write(quadratic_function))
+        self.wait(3)
+        self.play(FadeOut(quadratic_function))
+
+        opening_direction = Tex("If $a > 0$, the parabola opens upward.")
+        self.play(Write(opening_direction))
+        self.wait(3)
+        self.play(FadeOut(opening_direction))
+
+        axis = Axes(x_range=(-3, 3, 1), y_range=(-2, 3, 1))
+        parabola_up = axis.plot(lambda x: 0.5 * x**2 - 1, color=BLUE)
+        self.play(Create(axis), Create(parabola_up))
+        self.wait(3)
+
+        concluding_upward = Tex("This parabola opens upward.")
+        self.play(Write(concluding_upward))
+        self.wait(2)
+        self.play(FadeOut(concluding_upward), FadeOut(axis), FadeOut(parabola_up))
+
+        opening_downward = Tex("If $a < 0$, the parabola opens downward.")
+        self.play(Write(opening_downward))
+        self.wait(3)
+        self.play(FadeOut(opening_downward))
+
+        axis = Axes(x_range=(-3, 3, 1), y_range=(-3, 2, 1))
+        parabola_down = axis.plot(lambda x: -0.5 * x**2 + 1, color=RED)
+        self.play(Create(axis), Create(parabola_down))
+        self.wait(3)
+
+        concluding_downward = Tex("This parabola opens downward.")
+        self.play(Write(concluding_downward))
+        self.wait(2)
+        self.play(FadeOut(concluding_downward), FadeOut(axis), FadeOut(parabola_down))
+
+        vertex_intro = Tex("The vertex is the highest or lowest point on the parabola.")
+        self.play(Write(vertex_intro))
+        self.wait(3)
+        self.play(FadeOut(vertex_intro))
+
+        vertex_arrow = Arrow(start=RIGHT * 2 + DOWN, end=RIGHT * 2 + UP, buff=0)
+        vertex_label = Tex("Vertex").next_to(vertex_arrow.get_end(), RIGHT)
+        self.play(Create(vertex_arrow), Write(vertex_label))
+        self.wait(3)
+        self.play(FadeOut(vertex_arrow), FadeOut(vertex_label))
+
+        axis_of_symmetry = Line(start=RIGHT * 2, end=RIGHT * 2 + UP * 3, color=YELLOW)
+        self.play(Create(axis_of_symmetry))
         self.wait(2)
 
-        with self.voiceover(text="Graphing is a powerful tool used to visualize mathematical relationships and functions. Let's explore this concept together.") as tracker:
-            self.wait(2)
+        symmetry_intro = Tex("The parabola is symmetric about the axis.")
+        self.play(Write(symmetry_intro))
+        self.wait(3)
+        self.play(FadeOut(symmetry_intro), FadeOut(axis_of_symmetry))
 
-    def coordinate_system_scene(self):
-        title = Tex("The Cartesian Coordinate System")
-        title.to_edge(UP)
-        self.play(Write(title))
+        y_intercept_intro = Tex("The y-intercept occurs when $x = 0$.")
+        self.play(Write(y_intercept_intro))
+        self.wait(3)
+        self.play(FadeOut(y_intercept_intro))
 
-        axes = Axes(x_range=[-5, 5, 1], y_range=[-5, 5, 1], axis_config={"color": BLUE})
-        axes_labels = axes.get_axis_labels(x_label="X-axis", y_label="Y-axis")
+        y_intercept = Dot(point=ORIGIN, color=GREEN)
+        y_arrow = Arrow(start=UP, end=ORIGIN, buff=0)
+        self.play(Create(y_intercept), Create(y_arrow))
+        self.wait(3)
+        
+        x_intercepts_intro = Tex("X-intercepts occur where the parabola crosses the x-axis.")
+        self.play(Write(x_intercepts_intro))
+        self.wait(3)
+        self.play(FadeOut(x_intercepts_intro))
 
-        with self.voiceover(text="The Cartesian coordinate system consists of two perpendicular lines, the x-axis and the y-axis, intersecting at the origin.") as tracker:
-            self.play(Create(axes), Write(axes_labels))
-            self.wait(2)
+        x_intercept1 = Dot(point=LEFT + DOWN, color=PURPLE)
+        x_intercept2 = Dot(point=RIGHT + DOWN, color=PURPLE)
+        self.play(Create(x_intercept1), Create(x_intercept2))
+        self.wait(3)
 
-    def plotting_points_scene(self):
-        title = Tex("Plotting Points on the Graph")
-        title.to_edge(UP)
-        self.play(Write(title))
+        concluding_intro = Tex("Parabolas have applications in various fields.")
+        self.play(Write(concluding_intro))
+        self.wait(3)
 
-        point_a = Dot(Point(2, 3), color=YELLOW)
-        point_b = Dot(Point(-1, -2), color=GREEN)
-        point_c = Dot(Point(-3, 4), color=RED)
+        applications = Tex("1. Projectile motion", "2. Satellite dishes", "3. Optimization problems")
+        applications.arrange(DOWN)
+        self.play(Write(applications[0]))
+        self.wait(2)
+        self.play(Write(applications[1]))
+        self.wait(2)
+        self.play(Write(applications[2]))
+        self.wait(3)
 
-        with self.voiceover(text="Let's plot some points. The point (2, 3) is located 2 units to the right and 3 units up from the origin.") as tracker:
-            self.play(Create(point_a))
-            self.wait(2)
+        self.play(FadeOut(applications))
+        concluding_remarks = Tex("Understanding parabolas is crucial in mathematics.")
+        self.play(Write(concluding_remarks))
+        self.wait(3)
 
-        with self.voiceover(text="The point (-1, -2) is found by moving 1 unit to the left and 2 units down.") as tracker:
-            self.play(Create(point_b))
-            self.wait(2)
-
-        with self.voiceover(text="Finally, the point (-3, 4) is 3 units to the left and 4 units up.") as tracker:
-            self.play(Create(point_c))
-            self.wait(2)
-
-    def linear_equations_scene(self):
-        title = Tex("Graphing Linear Equations")
-        title.to_edge(UP)
-        self.play(Write(title))
-
-        axes = Axes(x_range=[-5, 5, 1], y_range=[-5, 5, 1], axis_config={"color": BLUE})
-        line = axes.plot(lambda x: 2*x + 3, color=YELLOW)
-
-        with self.voiceover(text="Now, let's graph the linear equation y equals 2x plus 3. This represents a line with a slope of 2 and a y-intercept of 3.") as tracker:
-            self.play(Create(axes))
-            self.play(Create(line))
-            self.wait(3)
-
-    def analyzing_graphs_scene(self):
-        title = Tex("Analyzing Graphs")
-        title.to_edge(UP)
-        self.play(Write(title))
-
-        axes = Axes(x_range=[-5, 5, 1], y_range=[-5, 5, 1], axis_config={"color": BLUE})
-        line1 = axes.plot(lambda x: x, color=YELLOW)
-        line2 = axes.plot(lambda x: -x, color=RED)
-
-        with self.voiceover(text="When analyzing graphs, we look at the slope, intercepts, and how the graph behaves. Here, we have two lines: one increasing and the other decreasing.") as tracker:
-            self.play(Create(axes))
-            self.play(Create(line1), Create(line2))
-            self.wait(3)
-
-    def practice_scene(self):
-        title = Tex("Practice Graphing")
-        title.to_edge(UP)
-        self.play(Write(title))
-
-        examples = [
-            Tex(r"1. Graph\: y = \frac{1}{2}x + 1"),
-            Tex(r"2. Graph\: y = -x + 2"),
-            Tex(r"3. Graph\: y = 3x - 4"),
-        ]
-        for i, example in enumerate(examples):
-            example.next_to(title, DOWN, buff=0.5 + i)
-            self.play(Write(example))
-
-        with self.voiceover(text="Now it's your turn! Try graphing these linear equations on your own. Remember to find the slope and y-intercept for each equation.") as tracker:
-            self.wait(3)
+        self.play(FadeOut(concluding_remarks))
