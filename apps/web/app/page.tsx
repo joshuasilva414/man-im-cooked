@@ -28,13 +28,15 @@ export default function Home() {
 
     try {
       // Ensure this is a POST request
-      const res = await fetch("http://localhost:3001/generate", {
-        method: "POST", // Ensure it's a POST request
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ query: prompt }), // Send the prompt in the body
-      });
+      const res = await fetch(
+        `http://localhost:3001/generate?query=${prompt}`,
+        {
+          method: "POST", // Ensure it's a POST request
+          headers: {
+            "Content-Type": "application/json",
+          }, // Send the prompt in the body
+        }
+      );
 
       const data = await res.json();
       if (res.ok) {

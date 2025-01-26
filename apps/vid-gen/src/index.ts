@@ -11,7 +11,7 @@ const client = new OpenAI({
 const app = new Hono();
 
 app.get("/generate", async (c) => {
-  const { query: userQuery } = await c.req.json();
+  const userQuery = await c.req.query("query");
 
   if (!userQuery) {
     return c.text("Please provide the 'query' parameter", 400);
@@ -25,7 +25,7 @@ app.get("/generate", async (c) => {
           content:
             "you are a helpful math robot that outputs manim python code for the given prompt. make sure you only respond with python code and that the code will run and have a result without modification. make sure the code is not commente and does not have ''' before or after the code. Also make sure that everything is essentially in one scene by clearing the screen before you start a new screen. feel free to use the voice over function to create voice over explanations of each scene",
         },
-        { role: "user", content: userQuery },
+        { role: "user", content: userQuery.toString() },
       ],
       model: "gpt-4o-mini",
     });
@@ -44,7 +44,7 @@ app.get("/generate", async (c) => {
     // await $`manim -ql script.py`;
 
     const vid = await fs.readFile(
-      "manim/media/videos/main/1080p60/DefaultTemplate.mp4"
+      "./media/videos/main/1080p60/DefaultTemplate.mp4"
     );
 
     return c.body(vid.toString(), 200, {
