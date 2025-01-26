@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import WebResources from "@/components/ui/webResources";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
 const videoIds = [
   "IQqtsm-bBRU",
   "r6sGWTCMz2k",
@@ -75,6 +77,7 @@ export default function Home() {
 
   return (
     <>
+      
       <div className="flex items-center justify-center flex-col h-screen w-full bg-[hsl(var(--secondary))] p-4 border border-b-black">
         <h1 className="text-5xl font-bold p-6 text-[hsl(var(--primary))] ">
           ManImCooked
