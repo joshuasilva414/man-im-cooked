@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,10 +8,19 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import WebResources from "@/components/ui/webResources";
+const videoIds = [
+  "IQqtsm-bBRU",
+  "r6sGWTCMz2k",
+  "ltLUadnCyi0",
+  "IHZwWFHWa-w",
+  "IQqtsm-bBRU",
+  "KuXjwB4LzSA"
 
+];
 export default function Home() {
   const [prompt, setPrompt] = useState("");
-  const [response, setResponse] = useState<string>("/FFTExplanation.mp4");
+  const [response, setResponse] = useState("");
   const [responseReady, setResponseReady] = useState(0);
   const [error, setError] = useState(false);
 
@@ -31,19 +40,18 @@ export default function Home() {
       const res = await fetch(
         `http://localhost:3001/generate?query=${prompt}`,
         {
+          method: "POST", // Ensure it's a POST request
           headers: {
-            "Response-Type": "video/mp4",
-            "Accept-Encoding": "binary",
-          },
+            "Content-Type": "application/json",
+          }, // Send the prompt in the body
         }
       );
 
-      const vidData = await res.blob(); // Convert response to Blob
-      const videoUrl = URL.createObjectURL(vidData);
+      const data = await res.json();
       if (res.ok) {
-        setResponse(videoUrl); // Display result from the API
+        setResponse(data.result); // Display result from the API
       } else {
-        console.error("Error:", vidData);
+        console.error("Error:", data.message);
         setResponse("Error generating response");
       }
     } catch (error) {
@@ -56,6 +64,18 @@ export default function Home() {
     // Clear the input after submission
     setPrompt("");
   };
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    // Automatically go to the next slide every 5 seconds
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % videoIds.length);
+    }, 5000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [videoIds.length]);
 
   return (
     <>
@@ -65,7 +85,7 @@ export default function Home() {
         </h1>
         {responseReady == 1 && (
           <video controls className="w-full h-1/2 bg-black rounded-lg">
-            <source src={response} type="video/mp4" />
+            <source src="/FFTExplanation.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         )}
@@ -123,142 +143,48 @@ export default function Home() {
         </div>
       </div>
       <h1 className="text-3xl font-bold p-4 text-[hsl(var(--primary))]">
-        Other Resources!
+        Popular Math Videos 
       </h1>
-      <div className="flex items-center flex-col h-screen w-full bg-[hsl(var(--background))] p-4">
-        <Accordion type="single" collapsible className="w-1/2">
-          <AccordionItem value="web-resources">
-            <AccordionTrigger className="text-xl">
-              Web Resources
-            </AccordionTrigger>
-            <AccordionContent>
-              <div className="flex flex-col space-y-2">
-                {/* 1. Khan Academy */}
-                <div>
-                  <a
-                    href="https://www.khanacademy.org/"
-                    className="text-sky-500"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Khan Academy
-                  </a>
-                </div>
-
-                {/* 2. Math Is Fun */}
-                <div>
-                  <a
-                    href="https://www.mathsisfun.com/"
-                    className="text-sky-500"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Math Is Fun
-                  </a>
-                </div>
-
-                {/* 3. WolframAlpha */}
-                <div>
-                  <a
-                    href="https://www.wolframalpha.com/"
-                    className="text-sky-500"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    WolframAlpha
-                  </a>
-                </div>
-
-                {/* 4. Desmos */}
-                <div>
-                  <a
-                    href="https://www.desmos.com/"
-                    className="text-sky-500"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Desmos
-                  </a>
-                </div>
-
-                {/* 5. Purplemath */}
-                <div>
-                  <a
-                    href="https://www.purplemath.com/"
-                    className="text-sky-500"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Purplemath
-                  </a>
-                </div>
-
-                {/* 6. MathWorld */}
-                <div>
-                  <a
-                    href="https://mathworld.wolfram.com/"
-                    className="text-sky-500"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    MathWorld
-                  </a>
-                </div>
-
-                {/* 7. Paul's Online Math Notes */}
-                <div>
-                  <a
-                    href="https://tutorial.math.lamar.edu/"
-                    className="text-sky-500"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Paul&apos;s Online Math Notes
-                  </a>
-                </div>
-
-                {/* 8. Coolmath */}
-                <div>
-                  <a
-                    href="https://www.coolmath.com/"
-                    className="text-sky-500"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Coolmath
-                  </a>
-                </div>
-
-                {/* 9. Brilliant */}
-                <div>
-                  <a
-                    href="https://brilliant.org/"
-                    className="text-sky-500"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Brilliant
-                  </a>
-                </div>
-
-                {/* 10. Coursera (Math Courses) */}
-                <div>
-                  <a
-                    href="https://www.coursera.org/search?query=math"
-                    className="text-sky-500"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Coursera Math
-                  </a>
-                </div>
+      <div className="flex items-center flex-col w-full p-4 bg-gray-200 rounded-lg h-[500px]">
+        <div className="relative overflow-hidden w-full h-full">
+          {/* Slides Wrapper */}
+          <div
+            className="flex h-full w-1/2 transition-transform duration-1000 ease-in-out"
+            style={{
+              // Translate by -100% per slide to show each of the 6 videos in sequence
+              transform: `translateX(-${currentIndex * 100}%)`,
+            }}
+          >
+            {videoIds.map((id, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 w-full h-full flex items-center justify-center p-2"
+              >
+                <iframe
+                  src={`https://www.youtube.com/embed/${id}?rel=0`}
+                  title={`YouTube video ${id}`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full"
+                />
               </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-        {/* {response && <div className="mt-4 text-white">{response}</div>} */}
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <h1 className="flex flex-left text-3xl font-bold p-4 text-[hsl(var(--primary))]">
+        Other Resources
+      </h1>
+      <div className="flex items-center flex-col h-96 w-full bg-[hsl(var(--background))] p-4 bg-gray-200">
+
+        <WebResources />
+        {error && (
+          <div className="text-red-500 mt-2">Please enter a valid input</div>
+        )}
+
+        {response && <div className="mt-4 text-white">{response}</div>}
       </div>
     </>
   );
 }
-// route is /generate
