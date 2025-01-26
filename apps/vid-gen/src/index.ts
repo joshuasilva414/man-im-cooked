@@ -22,7 +22,7 @@ app.post("/generate", async (c) => {  // Handle POST request
       messages: [{ role: "user", content: query }],
       model: "gpt-4o-mini",  // Ensure correct model is used
     });
-    console.log(chatCompletion.choices[0].message.content)
+    //console.log(chatCompletion.choices[0].message.content)
     if (chatCompletion.choices.length === 0) {
       return c.text("An error occurred while generating the response", 500);
     }
