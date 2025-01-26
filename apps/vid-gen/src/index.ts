@@ -5,6 +5,11 @@ import OpenAI from "openai";
 import { cors } from "hono/cors"; // Import CORS if needed
 import { Blob } from "node:buffer";
 import { Data } from "hono/dist/types/context";
+import { open } from "node:fs";
+import {
+  ChatCompletionMessage,
+  ChatCompletionMessageParam,
+} from "openai/resources";
 
 const client = new OpenAI({
   apiKey: process.env["OPENAI_API_KEY"],
@@ -21,46 +26,83 @@ app.get("/generate", async (c) => {
     return c.text("Please provide the 'query' parameter", 400);
   }
 
+  let history: ChatCompletionMessageParam[] = [
+    {
+      role: "system",
+      name: "system",
+      content: `
+            you are a helpful math robot that helps explain math concepts to students.
+            `,
+    },
+    {
+      role: "user",
+      name: "user",
+      content: userQuery.toString(),
+    },
+  ];
+
   try {
-    const chatCompletion = await client.chat.completions.create({
-      messages: [
-        {
-          role: "system",
-          content: `
-            you are a helpful math robot that outputs manim python code for the given prompt. 
-            make sure you only respond with python code and that the code will run and 
+    const scriptCompletion = await client.chat.completions.create({
+      messages: history,
+      model: "gpt-4o-mini",
+    });
+
+    history.push({
+      role: "user",
+      name: "ChatGPT",
+      content: scriptCompletion.choices[0].message.content!,
+    });
+
+    history.push({
+      role: "system",
+      name: "system",
+      content: `
+            Now output manim code that will make an animation using the script. Make sure you only respond with python code and that the code will run and 
             have a result without modification. make sure the code is not commented and does not have 
             three apostrophies before or after the code. Also make sure that everything is 
-            essentially in one scene by clearing the screen before you start a new screen. feel 
-            free to use the voice over function to create voice over explanations of each scene. here is some example code of a voiceover being used to voice over a circle being drawn:
+            essentially in one scene by clearing the screen before you start a new screen. you must use the voice over function to create voice over explanations of each scene. here is some example code of a voiceover being used to voice over a circle being drawn. Your code should be following the same format, but producing a much longer video:
+            ----------------------------------------------------------------
             from manim_voiceover import VoiceoverScene
             from manim_voiceover.services.gtts import GTTSService
 
             class MyAwesomeScene(VoiceoverScene):
-            def construct(self):
-              self.set_speech_service(GTTSService())
+              def construct(self):
+                self.set_speech_service(GTTSService())
 
-              with self.voiceover(text="This circle is drawn as I speak.") as tracker:
-                  self.play(Create(circle))
-            `,
-        },
-        { role: "user", content: userQuery.toString() },
-      ],
+                with self.voiceover(text="This circle is drawn as I speak.") as tracker:
+                    self.play(Create(circle))
+            ----------------------------------------------------------------
+            
+            The dimensions of the video will be 854x480 at 24fps, so make sure content does not get cut off.
+
+            The total animation time should be several minutes long, so take your time to explain the concepts in detail.`,
+    });
+
+    const chatCompletion = await client.chat.completions.create({
+      messages: history,
       model: "gpt-4o-mini",
     });
 
-    console.log(chatCompletion.choices[0].message.content);
+    // console.log(chatCompletion.choices[0].message.content);
 
-    if (chatCompletion.choices.length === 0) {
+    if (scriptCompletion.choices.length === 0) {
       return c.text("Unable to generate a response at this time", 500);
     }
 
     await fs.writeFile("script.py", chatCompletion.choices[0].message.content!);
 
-    await $`manim -ql script.py -c manim.cfg -o script.mp4`;
+    try {
+      const output =
+        await $`manim -ql script.py -c manim.cfg -o script.mp4`.text();
+      console.log(output);
+    } catch (err: any) {
+      console.log(`Failed with code ${err.exitCode}`);
+      console.log(err.stdout.toString());
+      console.log(err.stderr.toString());
+    }
 
-    fs.readFile("./media/script.mp4");
-    const vid = await fs.readFile("./media/script.mp4");
+    await (await fs.open("./media/script.mp4")).datasync();
+    const vid = await (await fs.open("./media/script.mp4")).readFile();
 
     return c.body(vid as any, 200, {
       "Content-Type": "video/mp4",

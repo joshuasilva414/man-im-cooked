@@ -79,7 +79,7 @@ export default function Home() {
           ManImCooked
         </h1>
         {responseReady == 1 && (
-          <video controls className="w-full h-1/2 bg-black rounded-lg">
+          <video controls autoPlay className="w-full h-1/2 bg-black rounded-lg">
             <source src={response} type="video/mp4" />
             Your browser does not support the video tag.
           </video>

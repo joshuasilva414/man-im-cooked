@@ -2,33 +2,75 @@ from manim_voiceover import VoiceoverScene
 from manim_voiceover.services.gtts import GTTSService
 from manim import *
 
-class PythagoreanTheoremScene(VoiceoverScene):
+class MultiplicativePropertyScene(VoiceoverScene):
     def construct(self):
         self.set_speech_service(GTTSService())
 
-        title = Text("Pythagorean Theorem").scale(1.5)
+        title = Tex("Multiplicative Properties", font_size=36)
         self.play(Write(title))
         self.wait(1)
-
-        self.play(FadeOut(title))
-
-        right_triangle = Polygon(0, 0, 3, 0, 0, 4, color=BLUE)
-        hypotenuse = Line(3, 0, 0, 4, color=YELLOW)
-        a_label = MathTex("a").next_to(right_triangle.get_vertices()[0:2], DOWN)
-        b_label = MathTex("b").next_to(right_triangle.get_vertices()[1:3], RIGHT)
-        c_label = MathTex("c").next_to(hypotenuse, UP)
-
-        with self.voiceover(text="Let's draw a right triangle.") as tracker:
-            self.play(Create(right_triangle))
-        with self.voiceover(text="The sides are labeled 'a' and 'b', and the hypotenuse is 'c'.") as tracker:
-            self.play(Create(hypotenuse), Write(a_label), Write(b_label), Write(c_label))
         
-        self.wait(2)
+        self.play(FadeOut(title))
+        
+        zero_property = Tex("1. Multiplicative Property of Zero: ", font_size=24)
+        zero_example = Tex("a \\times 0 = 0", font_size=24)
+        
+        with self.voiceover(text="Let's begin with the property of zero. The multiplicative property of zero states that any number multiplied by zero equals zero.") as tracker:
+            self.play(Write(zero_property))
+            self.wait(1)
+            self.play(Write(zero_example))
+            self.wait(2)
+        
+        self.play(FadeOut(zero_property), FadeOut(zero_example))
+        
+        identity_property = Tex("2. Multiplicative Identity: ", font_size=24)
+        identity_example = Tex("a \\times 1 = a", font_size=24)
+        
+        with self.voiceover(text="Next, we have the multiplicative identity. This property says that when you multiply any number by one, it remains unchanged.") as tracker:
+            self.play(Write(identity_property))
+            self.wait(1)
+            self.play(Write(identity_example))
+            self.wait(2)
+        
+        self.play(FadeOut(identity_property), FadeOut(identity_example))
+        
+        inverse_property = Tex("3. Multiplicative Inverse: ", font_size=24)
+        inverse_example = Tex("a \\times \\frac{1}{a} = 1 \\text{ (for } a \\neq 0\\text{)}", font_size=20)
+        
+        with self.voiceover(text="The multiplicative inverse states that every non-zero number has an inverse, which you multiply with to get one.") as tracker:
+            self.play(Write(inverse_property))
+            self.wait(1)
+            self.play(Write(inverse_example))
+            self.wait(3)
 
-        formula = MathTex("a^2 + b^2 = c^2").scale(1.5)
-        formula.move_to(UP * 3)
+        self.play(FadeOut(inverse_property), FadeOut(inverse_example))
+        
+        distributive_property = Tex("4. Distributive Property: ", font_size=24)
+        distributive_example = Tex("a(b + c) = ab + ac", font_size=24)
+        
+        with self.voiceover(text="The distributive property shows how multiplication distributes over addition or subtraction.") as tracker:
+            self.play(Write(distributive_property))
+            self.wait(1)
+            self.play(Write(distributive_example))
+            self.wait(3)
 
-        with self.voiceover(text="According to the Pythagorean theorem, a² plus b² equals c².") as tracker:
-            self.play(Write(formula))
+        self.play(FadeOut(distributive_property), FadeOut(distributive_example))
+        
+        exponent_property = Tex("5. Properties of Exponents: ", font_size=24)
+        exponent_example = Tex("a^m \\times a^n = a^{m+n}", font_size=24)
 
-        self.wait(2)
+        with self.voiceover(text="Finally, we have properties of exponents, where multiplying powers with the same base leads to adding their exponents.") as tracker:
+            self.play(Write(exponent_property))
+            self.wait(1)
+            self.play(Write(exponent_example))
+            self.wait(3)
+
+        self.play(FadeOut(exponent_property), FadeOut(exponent_example))
+        
+        conclusion = Tex("These properties are fundamental in arithmetic and algebra.", font_size=24)
+        
+        with self.voiceover(text="In conclusion, these multiplicative properties are essential tools that simplify computations and enhance your understanding of mathematics.") as tracker:
+            self.play(Write(conclusion))
+            self.wait(3)
+        
+        self.play(FadeOut(conclusion))
