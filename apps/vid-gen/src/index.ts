@@ -31,7 +31,7 @@ app.get("/generate", async (c) => {
       chatCompletion.choices[0].message.content!
     );
 
-    await $`manim -ql script.py`;
+    // await $`manim -ql script.py`;
 
     const vid = await fs.readFile(
       "manim/media/videos/main/1080p60/DefaultTemplate.mp4"
