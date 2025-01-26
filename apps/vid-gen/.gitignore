@@ -1,2 +1,4 @@
 # deps
 node_modules/
+
+manim/__pycache__
