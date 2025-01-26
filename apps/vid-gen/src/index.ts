@@ -75,7 +75,7 @@ app.get("/generate", async (c) => {
             
             The dimensions of the video will be 854x480 at 24fps, so make sure content does not get cut off.
 
-            The total animation time should be several minutes long, so take your time to explain the concepts in detail. below is an example script that explains the fast fourier transform. however it still needs voiceover
+            The total animation time should be atleast a minute long, so take your time to explain the concepts in detail. below is an example script that explains the fast fourier transform. however it still needs voiceover
             from manim import *
 
 `,
