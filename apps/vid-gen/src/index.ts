@@ -63,6 +63,7 @@ app.get("/generate", async (c) => {
             essentially in one scene by clearing the screen before you start a new screen. you must use the voice over function to create voice over explanations of each scene. here is some example code of a voiceover being used to voice over a circle being drawn. Your code should be following the same format, but producing a much longer video:
             ----------------------------------------------------------------
             from manim import *
+            from manim import Tex, MathTex
             from manim_voiceover import VoiceoverScene
             from manim_voiceover.services.gtts import GTTSService
 
@@ -78,6 +79,7 @@ app.get("/generate", async (c) => {
 
             The total animation time should be atleast a minute long, so take your time to explain the concepts in detail. below is an example script that explains the fast fourier transform. however it still needs voiceover
             from manim import *
+            also make sure to use the Tex or MathTex functions instead of the text function so that the math is correctly formatted
 
 `,
             
