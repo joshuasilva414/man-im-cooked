@@ -142,19 +142,19 @@ export default function Home() {
         Popular Math Videos 
       </h1>
       <div className="flex items-center flex-col w-full p-4 bg-gray-200 rounded-lg h-[500px]">
-
         <div className="relative overflow-hidden w-full h-full">
           {/* Slides Wrapper */}
           <div
-            className="flex h-full transition-transform duration-1000 ease-in-out"
+            className="flex h-full w-1/2 transition-transform duration-1000 ease-in-out"
             style={{
+              // Translate by -100% per slide to show each of the 6 videos in sequence
               transform: `translateX(-${currentIndex * 100}%)`,
             }}
           >
             {videoIds.map((id, i) => (
               <div
                 key={i}
-                className="flex-shrink-0 w-1/2  flex items-center justify-center bg-white"
+                className="flex-shrink-0 w-full h-full flex items-center justify-center p-2"
               >
                 <iframe
                   src={`https://www.youtube.com/embed/${id}?rel=0`}
@@ -168,6 +168,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+
       <h1 className="flex flex-left text-3xl font-bold p-4 text-[hsl(var(--primary))]">
         Other Resources
       </h1>
