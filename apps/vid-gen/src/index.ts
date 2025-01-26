@@ -3,12 +3,16 @@ import * as fs from "node:fs/promises";
 import { $ } from "bun";
 import OpenAI from "openai";
 import { cors } from "hono/cors"; // Import CORS if needed
+import { Blob } from "node:buffer";
+import { Data } from "hono/dist/types/context";
 
 const client = new OpenAI({
   apiKey: process.env["OPENAI_API_KEY"],
 });
 
 const app = new Hono();
+
+app.use(cors());
 
 app.get("/generate", async (c) => {
   const userQuery = await c.req.query("query");
@@ -62,8 +66,9 @@ app.get("/generate", async (c) => {
       "./media/videos/main/1080p60/DefaultTemplate.mp4"
     );
 
-    return c.body(vid.toString(), 200, {
+    return c.body(vid as any, 200, {
       "Content-Type": "video/mp4",
+      "Content-Encoding": "binary",
       "Content-Length": vid.length.toString(),
     });
   } catch (error: unknown) {

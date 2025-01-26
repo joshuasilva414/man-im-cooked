@@ -11,7 +11,7 @@ import {
 
 export default function Home() {
   const [prompt, setPrompt] = useState("");
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState<string>("/FFTExplanation.mp4");
   const [responseReady, setResponseReady] = useState(0);
   const [error, setError] = useState(false);
 
@@ -31,18 +31,19 @@ export default function Home() {
       const res = await fetch(
         `http://localhost:3001/generate?query=${prompt}`,
         {
-          method: "POST", // Ensure it's a POST request
           headers: {
-            "Content-Type": "application/json",
-          }, // Send the prompt in the body
+            "Response-Type": "video/mp4",
+            "Accept-Encoding": "binary",
+          },
         }
       );
 
-      const data = await res.json();
+      const vidData = await res.blob(); // Convert response to Blob
+      const videoUrl = URL.createObjectURL(vidData);
       if (res.ok) {
-        setResponse(data.result); // Display result from the API
+        setResponse(videoUrl); // Display result from the API
       } else {
-        console.error("Error:", data.message);
+        console.error("Error:", vidData);
         setResponse("Error generating response");
       }
     } catch (error) {
@@ -64,7 +65,7 @@ export default function Home() {
         </h1>
         {responseReady == 1 && (
           <video controls className="w-full h-1/2 bg-black rounded-lg">
-            <source src="/FFTExplanation.mp4" type="video/mp4" />
+            <source src={response} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         )}
@@ -256,7 +257,7 @@ export default function Home() {
           <div className="text-red-500 mt-2">Please enter a valid input</div>
         )}
 
-        {response && <div className="mt-4 text-white">{response}</div>}
+        {/* {response && <div className="mt-4 text-white">{response}</div>} */}
       </div>
     </>
   );
