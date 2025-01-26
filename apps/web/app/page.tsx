@@ -84,6 +84,10 @@ export default function Home() {
             Submit
           </Button>
         </form>
+        {error && (
+          <div className="text-red-500 mt-2">Invalid input, please enter a valid input</div>
+        )}
+
 
         <div>
           <Button
@@ -252,11 +256,6 @@ export default function Home() {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-
-        {error && (
-          <div className="text-red-500 mt-2">Please enter a valid input</div>
-        )}
-
         {/* {response && <div className="mt-4 text-white">{response}</div>} */}
       </div>
     </>
