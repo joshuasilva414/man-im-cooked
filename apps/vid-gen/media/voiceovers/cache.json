@@ -1,0 +1,38 @@
+[
+  {
+    "input_text": "Let me explain the Fast Fourier Transform.",
+    "input_data": {
+      "input_text": "Let me explain the Fast Fourier Transform.",
+      "service": "gtts"
+    },
+    "original_audio": "let-me-explain-the-fast-fourier-transform-5e5c6678.mp3",
+    "final_audio": "let-me-explain-the-fast-fourier-transform-5e5c6678.mp3"
+  },
+  {
+    "input_text": "The FFT efficiently computes the Discrete Fourier Transform.",
+    "input_data": {
+      "input_text": "The FFT efficiently computes the Discrete Fourier Transform.",
+      "service": "gtts"
+    },
+    "original_audio": "the-fft-efficiently-computes-the-discrete-fourier-91f59205.mp3",
+    "final_audio": "the-fft-efficiently-computes-the-discrete-fourier-91f59205.mp3"
+  },
+  {
+    "input_text": "Let me explain the Fast Fourier Transform.",
+    "input_data": {
+      "input_text": "Let me explain the Fast Fourier Transform.",
+      "service": "gtts"
+    },
+    "original_audio": "let-me-explain-the-fast-fourier-transform-5e5c6678.mp3",
+    "final_audio": "let-me-explain-the-fast-fourier-transform-5e5c6678.mp3"
+  },
+  {
+    "input_text": "The FFT efficiently computes the Discrete Fourier Transform.",
+    "input_data": {
+      "input_text": "The FFT efficiently computes the Discrete Fourier Transform.",
+      "service": "gtts"
+    },
+    "original_audio": "the-fft-efficiently-computes-the-discrete-fourier-91f59205.mp3",
+    "final_audio": "the-fft-efficiently-computes-the-discrete-fourier-91f59205.mp3"
+  }
+]

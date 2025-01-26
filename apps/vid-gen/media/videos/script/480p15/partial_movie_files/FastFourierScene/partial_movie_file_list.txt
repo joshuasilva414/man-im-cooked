@@ -1,0 +1,12 @@
+# This file is used internally by FFMPEG.
+file 'file:/Users/joshuasilva/Dev/Web/manim-cooked/apps/vid-gen/media/videos/script/480p15/partial_movie_files/FastFourierScene/1185818338_101341165_223132457.mp4'
+file 'file:/Users/joshuasilva/Dev/Web/manim-cooked/apps/vid-gen/media/videos/script/480p15/partial_movie_files/FastFourierScene/624642324_2919340033_1250828081.mp4'
+file 'file:/Users/joshuasilva/Dev/Web/manim-cooked/apps/vid-gen/media/videos/script/480p15/partial_movie_files/FastFourierScene/624642324_663939416_173145001.mp4'
+file 'file:/Users/joshuasilva/Dev/Web/manim-cooked/apps/vid-gen/media/videos/script/480p15/partial_movie_files/FastFourierScene/624642324_3742659329_4131132508.mp4'
+file 'file:/Users/joshuasilva/Dev/Web/manim-cooked/apps/vid-gen/media/videos/script/480p15/partial_movie_files/FastFourierScene/624642324_4084367541_658693212.mp4'
+file 'file:/Users/joshuasilva/Dev/Web/manim-cooked/apps/vid-gen/media/videos/script/480p15/partial_movie_files/FastFourierScene/624642324_1288124874_1658963162.mp4'
+file 'file:/Users/joshuasilva/Dev/Web/manim-cooked/apps/vid-gen/media/videos/script/480p15/partial_movie_files/FastFourierScene/624642324_2225524038_2453111782.mp4'
+file 'file:/Users/joshuasilva/Dev/Web/manim-cooked/apps/vid-gen/media/videos/script/480p15/partial_movie_files/FastFourierScene/624642324_2332020917_3296155534.mp4'
+file 'file:/Users/joshuasilva/Dev/Web/manim-cooked/apps/vid-gen/media/videos/script/480p15/partial_movie_files/FastFourierScene/624642324_784179552_3433969545.mp4'
+file 'file:/Users/joshuasilva/Dev/Web/manim-cooked/apps/vid-gen/media/videos/script/480p15/partial_movie_files/FastFourierScene/624642324_1366959355_2948081525.mp4'
+file 'file:/Users/joshuasilva/Dev/Web/manim-cooked/apps/vid-gen/media/videos/script/480p15/partial_movie_files/FastFourierScene/624642324_784179552_3637554122.mp4'

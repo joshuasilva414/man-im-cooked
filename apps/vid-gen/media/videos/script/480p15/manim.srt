@@ -1,0 +1,8 @@
+1
+00:00:03,000 --> 00:00:06,308
+Let me explain the Fast Fourier Transform.
+
+2
+00:00:06,400 --> 00:00:11,076
+The FFT efficiently computes the Discrete Fourier Transform.
+
