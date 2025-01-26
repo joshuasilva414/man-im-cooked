@@ -9,12 +9,13 @@ const app = new Hono();
 
 app.get("/generate", async (c) => {
   const userQuery = c.req.query("query");
+  
   if (!userQuery) {
     return c.text("Please provide the 'query' parameter", 400);
   }
   try {
     const chatCompletion = await client.chat.completions.create({
-      messages: [{ role: "user", content: userQuery }],
+      messages: [{ role: "system", content: "you are a helpful math robot that outputs manim python code for the given prompt. make sure you only respond with python code and that the code will run and have a result without modification. make sure the code is not commente and does not have ''' before or after the code. Also make sure that everything is essentially in one scene by clearing the screen before you start a new screen. feel free to use the voice over function to create voice over explanations of each scene" }, { role: "user", content: userQuery }],
       model: "gpt-4o-mini",
     });
     console.log(chatCompletion.choices[0].message.content);
