@@ -5,6 +5,10 @@ import { Button } from "@/components/ui/button";
 import WebResources from "@/components/ui/webResources";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
+import OpenAI from "openai";
+
+
+
 const videoIds = [
   "IQqtsm-bBRU",
   "r6sGWTCMz2k",
@@ -13,12 +17,15 @@ const videoIds = [
   "IQqtsm-bBRU",
   "KuXjwB4LzSA",
 ];
+
 export default function Home() {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("/FFTExplanation.mp4");
   const [responseReady, setResponseReady] = useState(0);
   const [error, setError] = useState(false);
 
+  
+  
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 

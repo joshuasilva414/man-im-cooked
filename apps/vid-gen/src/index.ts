@@ -41,17 +41,7 @@ app.get("/generate", async (c) => {
     },
   ];
 
-  try {
-    const scriptCompletion = await client.chat.completions.create({
-      messages: history,
-      model: "gpt-4o-mini",
-    });
-
-    history.push({
-      role: "user",
-      name: "ChatGPT",
-      content: scriptCompletion.choices[0].message.content!,
-    });
+  try { 
 
     history.push({
       role: "system",
@@ -80,6 +70,10 @@ app.get("/generate", async (c) => {
             The total animation time should be atleast a minute long, so take your time to explain the concepts in detail. below is an example script that explains the fast fourier transform. however it still needs voiceover
             from manim import *
             also make sure to use the Tex or MathTex functions instead of the text function so that the math is correctly formatted
+            again when doing a voiceover make sure you are using the functions correctly so that the voices are correctly synched with the video.
+            also try to make sure that everything looks nice and is in frame at all times
+            if you are dealing with 3d shapes make sure to change around the camera angles so that the shapes can be properly viewed
+
 
 `,
             
@@ -92,9 +86,7 @@ app.get("/generate", async (c) => {
 
     // console.log(chatCompletion.choices[0].message.content);
 
-    if (scriptCompletion.choices.length === 0) {
-      return c.text("Unable to generate a response at this time", 500);
-    }
+    
     const scriptFile = fs.openSync("script.py", "w");
     fs.writeFileSync(scriptFile, chatCompletion.choices[0].message.content!);
     fs.closeSync(scriptFile);
